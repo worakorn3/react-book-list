@@ -3,10 +3,12 @@ import logo from './logo.svg';
 import logo2 from './bookflip.svg';
 
 import './App.css';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+import { faStroopwafel, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import Bookshelf from './Bookshelf/Bookshelf';
 
@@ -29,5 +31,5 @@ class App extends Component {
     );
   }
 }
-library.add(faStroopwafel)
+library.add(faStroopwafel, faPlus)
 export default App;

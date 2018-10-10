@@ -11,8 +11,10 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    CustomInput,
+    Button,
 } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 class BookNavbar extends React.Component {
     constructor(props) {
@@ -20,29 +22,31 @@ class BookNavbar extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
-            query: '',
         }
     }
 
     toggle() {
-        console.log("toggle");
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
 
+    openModal() {
+        this.props.toggle();
+    }
+
     render() {
         return (
             <Navbar color="light" light expand="md">
-                <NavbarBrand href="/">reactstrap</NavbarBrand>
+                <NavbarBrand href="/">React Bookshelf</NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
-                            <NavLink href="/components/">Components</NavLink>
+                            <Button color="success" onClick={() => this.openModal()}><FontAwesomeIcon icon={faPlus} /> New Book</Button>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                            <NavLink href="https://github.com/worakorn3/react-book-list">GitHub</NavLink>
                         </NavItem>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
@@ -61,13 +65,6 @@ class BookNavbar extends React.Component {
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
-                        <CustomInput
-                            id="query"
-                            value={this.props.query}
-                            onChange={e => this.props.onChange(e)}
-                            type="text" 
-                            placeholder="Search for book..."
-                        />
                     </Nav>
                 </Collapse>
             </Navbar>
