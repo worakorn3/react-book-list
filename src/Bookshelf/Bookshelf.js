@@ -45,8 +45,21 @@ class Bookshelf extends React.Component {
 
     }
 
-    saveData = () => {
-        console.log("SAVE");
+    saveData = (bookName, bookVol, bookPub, bookISBN) => {
+        if(this.isEmpty(bookName) 
+            || this.isEmpty(bookVol) 
+            || this.isEmpty(bookPub) 
+            || this.isEmpty(bookISBN)) 
+        {
+            alert("Fill all field!")
+        }
+        else {
+            console.log(bookName, bookVol, bookPub, bookISBN);
+        }
+    }
+
+    isEmpty = (string) => {
+        return string === "" || string === null || string === undefined;
     }
 
     handleChange = (e) => {

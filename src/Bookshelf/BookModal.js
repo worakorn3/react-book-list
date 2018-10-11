@@ -16,9 +16,20 @@ class BookModal extends React.Component {
         this.state = {
             qrDelay: 300,
             result: "Not Found",
-            isOpen: false
+            isOpen: false,
+            
+            bookName: '',
+            bookVol: '',
+            bookPub: '',
+            bookISBN: '',
         };
         this.handleScan.bind(this);
+    }
+
+    handleFieldChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
     }
 
     handleScan(data) {
@@ -46,23 +57,55 @@ class BookModal extends React.Component {
                                 <Row>
                                     <Col>
                                         <Label>Book Name:</Label>
-                                        <Input type="text" name="bookName" id="bookName" placeholder="Book Name..."></Input>
+                                        <Input 
+                                            type="text"
+                                            name="bookName"
+                                            id="bookName"
+                                            placeholder="Book Name..."
+                                            onChange={e => this.handleFieldChange(e)}
+                                        />
                                     </Col>
                                     <Col>
                                         <Label>Book Volume:</Label>
-                                        <Input type="text" name="bookVol" id="bookVol" placeholder="Book Volmue..."></Input>
+                                        <Input 
+                                            type="number" 
+                                            name="bookVol" 
+                                            id="bookVol" 
+                                            placeholder="Book Volmue..."
+                                            onChange={e => this.handleFieldChange(e)}
+                                        />
                                     </Col>
                                 </Row>
                                 <hr />
                                 <Label>Book Publisher:</Label>
-                                <Input type="text" name="bookPub" id="bookPub" placeholder="Book Publisher..."></Input>
+                                <Input 
+                                    type="text" 
+                                    name="bookPub" 
+                                    id="bookPub" 
+                                    placeholder="Book Publisher..."
+                                    onChange={e => this.handleFieldChange(e)}
+                                />
                                 <hr />
                                 <Label>Book ISBN:</Label><FontAwesomeIcon onClick={this.props.toggleNested} icon={faCamera} />
-                                <Input type="text" name="bookISBN" id="bookISBN" placeholder="Book ISBN..."></Input>
+                                <Input 
+                                    type="number" 
+                                    name="bookISBN" 
+                                    id="bookISBN" 
+                                    placeholder="Book ISBN..."
+                                    onChange={e => this.handleFieldChange(e)}
+                                />
                             </CardBody>
                             <CardFooter>
                                 <center>
-                                    <Button style={{ width: "40%" }} color="success" onClick={this.props.onSave}>SAVE</Button>
+                                    <Button 
+                                        style={{ width: "40%" }} 
+                                        color="success" 
+                                        onClick={() => this.props.onSave(
+                                            this.state.bookName, 
+                                            this.state.bookVol, 
+                                            this.state.bookPub, 
+                                            this.state.bookISBN)}
+                                    >SAVE</Button>
                                     <Button style={{width: "40%" }} color="secondary" onClick={this.props.toggle}>CANCEL</Button>
                                 </center>
                             </CardFooter>
