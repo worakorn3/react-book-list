@@ -27,6 +27,12 @@ class BookModal extends React.Component {
         this.handleScan.bind(this);
     }
 
+    handleFieldChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
     handleScan(data) {
         if (data) {
             this.setState({
