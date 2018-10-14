@@ -7,6 +7,7 @@ import config from '../config';
 import firebase from '../firebase';
 import BookModal from './BookModal';
 import BookNavbar from './BookNavbar';
+import Loader from 'react-loaders';
 
 class Bookshelf extends React.Component {
     constructor(props) {
@@ -14,16 +15,24 @@ class Bookshelf extends React.Component {
 
         this.state = {
             books: [],
+            publishers: [],
 
             modal: false,
             nestedModal: false,
             closeAll: false,
 
+            loader: false,
         };
     }
 
     componentDidMount() {
+        this.setState({
+            loader: true
+        })
         this.getDataFromFirebase();
+        this.setState({
+            loader: false
+        })
     }
 
     getDataFromFirebase = () => {
@@ -43,10 +52,21 @@ class Bookshelf extends React.Component {
                 alert("Error getting documents");
             });
 
+        firestore.collection('book_publisher')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc =>
+                    this.setState({
+                        publishers: this.state.publishers.concat(doc.data())
+                    })
+                );
+            }).catch(function (error) {
+                alert("Error getting documents");
+            });
     }
 
-    saveData = () => {
-        console.log("SAVE");
+    saveData(bookName, bookVol, bookPub, bookISBN) {
+        console.log("SAVE", bookName, bookVol, bookPub, bookISBN);
     }
 
     handleChange = (e) => {
@@ -77,7 +97,7 @@ class Bookshelf extends React.Component {
 
     noContentDisplay() {
         return (<div>
-            Nothing to display right now, please come back again.
+            Nothing to display right now, please come back later.
             </div>)
     }
 
@@ -114,12 +134,14 @@ class Bookshelf extends React.Component {
 
         return (
             <div>
-                <BookModal 
-                    isOpen={this.state.modal} 
-                    isOpenNested={this.state.nestedModal} 
-                    toggle={this.toggle} 
+                <Loader type="pacman" active={this.state.loader} />
+                <BookModal
+                    isOpen={this.state.modal}
+                    isOpenNested={this.state.nestedModal}
+                    toggle={this.toggle}
                     toggleNested={this.toggleNested}
-                    onSave={this.saveData}    
+                    onSave={this.saveData.bind(this)}
+                    dropdown={this.state.publishers}
                 />
                 {config.debugMode && <Button onClick={() => (console.log(this.state))}>DEBUG</Button>}
                 <Card>
