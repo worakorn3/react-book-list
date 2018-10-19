@@ -168,20 +168,10 @@ class Bookshelf extends React.Component {
         const expandRow = {
             renderer: row => (
                 <Table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <Card>
-                                <Row>
-                                    <Col>
-                                        <Label onClick={() => this.handleDelete(row)}><FontAwesomeIcon icon={faTrash} />Delete</Label>
-                                    </Col>
-                                </Row>
-                            </Card>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
+                    <tbody><tr><td><Card><Row><Col>
+                        {/*<Label onClick={() => this.handleDelete(row)}><FontAwesomeIcon icon={faTrash} />Delete</Label>*/}
+                    </Col></Row></Card></td></tr></tbody>
+                </Table>
             ),
             onlyOneExpanding: true
         };
