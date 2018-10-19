@@ -2,12 +2,15 @@ import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-import { Button, Card, CardBody, CardHeader } from 'reactstrap';
+import { Button, Card, CardBody, CardHeader, Modal, ModalBody, Table, Row, Col, Label } from 'reactstrap';
 import config from '../config';
 import firebase from '../firebase';
 import BookModal from './BookModal';
 import BookNavbar from './BookNavbar';
 import Loader from 'react-loaders';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 
 class Bookshelf extends React.Component {
     constructor(props) {
@@ -16,19 +19,17 @@ class Bookshelf extends React.Component {
         this.state = {
             books: [],
             publishers: [],
+            selectedRow: null,
 
             modal: false,
             nestedModal: false,
             closeAll: false,
 
-            loader: false,
+            loader: true,
         };
     }
 
     componentDidMount() {
-        this.setState({
-            loader: true
-        })
         this.getDataFromFirebase();
         this.setState({
             loader: false
@@ -36,6 +37,7 @@ class Bookshelf extends React.Component {
     }
 
     getDataFromFirebase = () => {
+
         const firestore = firebase.firestore();
         const settings = { timestampsInSnapshots: true };
         firestore.settings(settings);
@@ -66,7 +68,38 @@ class Bookshelf extends React.Component {
     }
 
     saveData(bookName, bookVol, bookPub, bookISBN) {
-        console.log("SAVE", bookName, bookVol, bookPub, bookISBN);
+        const firestore = firebase.firestore();
+        const settings = { timestampsInSnapshots: true };
+        firestore.settings(settings);
+        let obj = {
+            "book_name": bookName,
+            "book_vol": bookVol,
+            "book_pub": bookPub,
+            "book_isbn": bookISBN
+        }
+        firestore.collection("book_shelf").doc(bookISBN).set(obj)
+            .then(resp => {
+                this.setState({
+                    modal: false
+                })
+                alert("Book Saved! Reloading Page...")
+                window.location.reload();
+            });
+    }
+
+    handleDelete = (row) => {
+        console.log(row.book_isbn);
+        const firestore = firebase.firestore();
+        const settings = { timestampsInSnapshots: true };
+        firestore.settings(settings);
+        firestore.collection('book_shelf').doc(row.book_isbn).delete()
+            .then(resp => {
+                alert("Delete Success!");
+                window.location.reload();
+            })
+            .catch(err => {
+                alert("Delete Failed!", err);
+            })
     }
 
     handleChange = (e) => {
@@ -121,6 +154,38 @@ class Bookshelf extends React.Component {
             }
         ];
 
+        const selectRow = {
+            mode: 'radio',
+            bgColor: 'skyblue',
+            clickToSelect: true,
+            clickToExpand: true,
+            clickToEdit: true,
+            onSelect: (row, isSelect, rowIndex, e) => {
+                return;
+            }
+        };
+
+        const expandRow = {
+            renderer: row => (
+                <Table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <Card>
+                                <Row>
+                                    <Col>
+                                        <Label onClick={() => this.handleDelete(row)}><FontAwesomeIcon icon={faTrash} />Delete</Label>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </td>
+                    </tr>
+                </tbody>
+            </Table>
+            ),
+            onlyOneExpanding: true
+        };
+
         const defaultSorted = [{
             dataField: 'book_name',
             order: 'asc'
@@ -134,7 +199,11 @@ class Bookshelf extends React.Component {
 
         return (
             <div>
-                <Loader type="pacman" active={this.state.loader} />
+                <Modal isOpen={this.state.loader}>
+                    <ModalBody>
+                        <Loader type="pacman" active={this.state.loader} />
+                    </ModalBody>
+                </Modal>
                 <BookModal
                     isOpen={this.state.modal}
                     isOpenNested={this.state.nestedModal}
@@ -142,6 +211,7 @@ class Bookshelf extends React.Component {
                     toggleNested={this.toggleNested}
                     onSave={this.saveData.bind(this)}
                     dropdown={this.state.publishers}
+                    selectedRow={this.state.selectedRow}
                 />
                 {config.debugMode && <Button onClick={() => (console.log(this.state))}>DEBUG</Button>}
                 <Card>
@@ -173,6 +243,8 @@ class Bookshelf extends React.Component {
                                             striped
                                             hover
                                             defaultSorted={defaultSorted}
+                                            selectRow={selectRow}
+                                            expandRow={expandRow}
                                         />
                                     </div>
                                 )

@@ -5,14 +5,14 @@ class PublisherList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            publisherList: [],
+            publisherList: [{publisher_code: '', publisher_name: '-Select-'}],
             publisher: '',
         }
     }
 
     componentDidMount() {
         this.setState({
-            publisherList: this.props.dropdown
+            publisherList: this.state.publisherList.concat(this.props.dropdown)
         })
     }
 
@@ -34,7 +34,6 @@ class PublisherList extends React.Component {
         return(
             <div>
                 <CustomInput type="select" id="bookPublisher" onChange={this.onChange.bind(this)}>
-                    <option value="">-Select-</option>
                     {this.state.publisherList.map((item, index) => (
                         <option 
                             key={index} 

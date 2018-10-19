@@ -79,7 +79,13 @@ class BookModal extends React.Component {
                                 <Row>
                                     <Col>
                                         <Label>Book Name:</Label>
-                                        <Input type="text" name="bookName" id="bookName" placeholder="Book Name..." onChange={e => this.handleChange(e)}></Input>
+                                        <Input 
+                                            value={this.state.bookName} 
+                                            type="text" 
+                                            name="bookName" 
+                                            id="bookName" 
+                                            placeholder="Book Name..." 
+                                            onChange={e => this.handleChange(e)} />
                                     </Col>
                                     <Col>
                                         <Label>Book Volume:</Label>
@@ -106,6 +112,7 @@ class BookModal extends React.Component {
                                         disabled={(this.state.bookISBN === '' 
                                                     || this.state.bookName === '' 
                                                     || this.state.bookPub === '' 
+                                                    || this.state.bookPub === '-Select-' 
                                                     || this.state.bookVol === '')}
                                     >
                                     SAVE
