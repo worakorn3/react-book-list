@@ -2,14 +2,12 @@ import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-import { Button, Card, CardBody, CardHeader, Modal, ModalBody, Table, Row, Col, Label } from 'reactstrap';
+import Loader from 'react-loaders';
+import { Button, Card, CardBody, CardHeader, Col, Modal, ModalBody, Row, Table } from 'reactstrap';
 import config from '../config';
 import firebase from '../firebase';
 import BookModal from './BookModal';
 import BookNavbar from './BookNavbar';
-import Loader from 'react-loaders';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 class Bookshelf extends React.Component {
