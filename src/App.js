@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import logo2 from './bookflip.svg';
 
@@ -10,26 +11,34 @@ import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.c
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStroopwafel, faPlus } from '@fortawesome/free-solid-svg-icons'
 
+import Home from './home';
 import Bookshelf from './Bookshelf/Bookshelf';
 
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <img src={logo2} alt="logo" />
-          <h1 className="App-title">Welcome to React Bookshelf</h1>
-        </header>
-        {/* <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
-        <Bookshelf />
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <img src={logo2} alt="logo" />
+                    <h1 className="App-title">Welcome to React Bookshelf</h1>
+                </header>
+                {/* <p className="App-intro">
+                To get started, edit <code>src/App.js</code> and save to reload.
+              </p> */}
+                {/*<Bookshelf />*/}
 
-      </div>
-    );
-  }
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path={"/"} component={Home} />
+                        <Route exact path={"/bookshelf"} component={Bookshelf} />
+                    </Switch>
+                </BrowserRouter>
+            </div>
+
+        );
+    }
 }
-library.add(faStroopwafel, faPlus)
+library.add(faStroopwafel, faPlus);
 export default App;

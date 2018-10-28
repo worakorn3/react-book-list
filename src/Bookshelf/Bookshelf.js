@@ -65,7 +65,7 @@ class Bookshelf extends React.Component {
             }).catch(function (error) {
                 alert("Error getting documents");
             });
-    }
+    };
 
     saveData(bookName, bookVol, bookPub, bookISBN) {
         const firestore = firebase.firestore();
@@ -76,13 +76,13 @@ class Bookshelf extends React.Component {
             "book_vol": bookVol,
             "book_pub": bookPub,
             "book_isbn": bookISBN
-        }
+        };
         firestore.collection("book_shelf").doc(bookISBN).set(obj)
             .then(resp => {
                 this.setState({
                     modal: false
-                })
-                alert("Book Saved! Reloading Page...")
+                });
+                alert("Book Saved! Reloading Page...");
                 window.location.reload();
             });
     }
@@ -100,33 +100,33 @@ class Bookshelf extends React.Component {
             .catch(err => {
                 alert("Delete Failed!", err);
             })
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
-    }
+    };
 
     toggle = () => {
         this.setState({
             modal: !this.state.modal
         });
-    }
+    };
 
     toggleNested = () => {
         this.setState({
             nestedModal: !this.state.nestedModal,
             closeAll: false
         })
-    }
+    };
 
     toggleAll = () => {
         this.setState({
             nestedModal: !this.state.nestedModal,
             closeAll: true
         })
-    }
+    };
 
     noContentDisplay() {
         return (<div>
@@ -153,17 +153,6 @@ class Bookshelf extends React.Component {
                 sort: true
             }
         ];
-
-        const selectRow = {
-            mode: 'radio',
-            bgColor: 'skyblue',
-            clickToSelect: true,
-            clickToExpand: true,
-            clickToEdit: true,
-            onSelect: (row, isSelect, rowIndex, e) => {
-                return;
-            }
-        };
 
         const expandRow = {
             renderer: row => (
@@ -230,10 +219,8 @@ class Bookshelf extends React.Component {
                                             noDataIndication={() => this.noContentDisplay()}
                                             // pagination={paginationFactory()}
                                             pagination={pagination}
-                                            striped
                                             hover
                                             defaultSorted={defaultSorted}
-                                            selectRow={selectRow}
                                             expandRow={expandRow}
                                         />
                                     </div>

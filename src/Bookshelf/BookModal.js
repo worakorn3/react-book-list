@@ -31,7 +31,7 @@ class BookModal extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-    }
+    };
 
     handleScan(data) {
         if (data) {
@@ -52,13 +52,13 @@ class BookModal extends React.Component {
             this.state.bookPub,
             this.state.bookISBN
         );
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
-    }
+    };
 
     handleDropdown(name, pubCode, pubName) {
         this.setState({
