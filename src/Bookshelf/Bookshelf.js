@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import overlayFactory from 'react-bootstrap-table2-overlay';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-import Loader from 'react-loaders';
+import Pacman from '../Utils/PacmanLoader';
 import { Button, Card, CardBody, CardHeader, Modal, ModalBody } from 'reactstrap';
 import firebase from '../firebase';
 import BookModal from './BookModal';
@@ -130,8 +130,8 @@ class Bookshelf extends React.Component {
 
     tableFormatter = (cell, row, rowIndex, formatExtraData) => {
         return (<div>
-                <Button color='info' style={{marginRight: '5%'}}><FaEdit /></Button>
-                <Button color='danger'><FaTrash /></Button>
+                <Button onClick={() => alert('To be implemented')} color='info' style={{marginRight: '5%'}}><FaEdit /></Button>
+                <Button onClick={() => alert('To be implemented')} color='danger'><FaTrash /></Button>
             </div>);
     }
 
@@ -175,7 +175,7 @@ class Bookshelf extends React.Component {
             <div>
                 <Modal isOpen={this.state.loader}>
                     <ModalBody>
-                        <Loader type="pacman" active={this.state.loader} />
+                        <Pacman isOpen={this.state.loader} />
                     </ModalBody>
                 </Modal>
                 <BookModal
