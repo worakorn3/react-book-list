@@ -44,6 +44,21 @@ class BookModal extends React.Component {
         }, this.props.toggleNested);
     }
 
+    validateIsbn(isbn) {
+        let valid = false;
+        if(isbn && isbn.length === 13) {
+            let checkDigit = parseInt(isbn[12]);
+            let sum = 0;
+            for(let i = 0; i < isbn.length-1; i++) {
+                let modulo = i%2===0? 1:3;
+                sum += (parseInt(isbn[i])*modulo);
+            }
+            let modulo = sum%10;
+            valid = modulo===0? true : (10-modulo)===checkDigit
+        }
+        return valid;
+    }
+
     render() {
         return (
             <div>
@@ -102,8 +117,9 @@ class BookModal extends React.Component {
                                                     || this.state.bookName === '' 
                                                     || this.state.bookPub === '' 
                                                     || this.state.bookPub === '-Select-' 
-                                                    || this.state.bookVol === '')
-                                                }
+                                                    || this.state.bookVol === ''
+                                                    || !this.validateIsbn(this.state.bookISBN)
+                                                )}
                                     >
                                     SAVE
                                     </Button>
