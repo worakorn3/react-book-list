@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Card, CardHeader, CardBody,
-    Row, Col
+    Row, Col, Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -19,9 +19,9 @@ class Home extends React.Component {
                             <CardBody>
                                 <Link to={"/bookshelf"}>
                                     <Card>
-                                        <CardBody>
+                                        <Button color="success">
                                             Bookshelf
-                                        </CardBody>
+                                        </Button>
                                     </Card>
                                 </Link>
                             </CardBody>

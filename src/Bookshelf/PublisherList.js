@@ -23,7 +23,7 @@ class PublisherList extends React.Component {
         })
     }
 
-    onChange(e) {
+    onChange = (e) => {
         const index = e.target.value;
         const slice = this.state.publisherList.slice();
         const selected = slice[index];
@@ -33,7 +33,7 @@ class PublisherList extends React.Component {
     render() {
         return(
             <div>
-                <CustomInput type="select" id="bookPublisher" onChange={this.onChange.bind(this)}>
+                <CustomInput value={this.props.value} type="select" id="bookPublisher" onChange={this.onChange}>
                     {this.state.publisherList.map((item, index) => (
                         <option 
                             key={index} 
