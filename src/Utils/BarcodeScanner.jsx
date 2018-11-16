@@ -1,8 +1,12 @@
 import React from 'react';
 import Quagga from 'quagga';
+import {Button} from 'reactstrap'
 
 class BarcodeScanner extends React.Component {
-
+    constructor(props) {
+        super(props);
+        this._onDetected = this._onDetected.bind(this);
+    }
     componentDidMount() {
         Quagga.init({
             inputStream: {
@@ -11,13 +15,19 @@ class BarcodeScanner extends React.Component {
                     width: 640,
                     height: 480,
                     facing: "environment" // or user
+                },
+                area: {
+                    top: "0%",    // top offset
+                    right: "0%",  // right offset
+                    left: "0%",   // left offset
+                    bottom: "0%"  // bottom offset
                 }
             },
             locator: {
                 patchSize: "medium",
                 halfSample: true
             },
-            numOfWorkers: 2,
+            numOfWorkers: 4,
             decoder: {
                 readers: ["ean_reader"]
             },
@@ -36,12 +46,14 @@ class BarcodeScanner extends React.Component {
     }
 
     _onDetected(result) {
-        alert(result)
+        let barcode = result.codeResult.code;
+        Quagga.stop();
+        this.props.onDetected(barcode);
     }
 
     render() {
         return (
-            <div id="interactive" className="viewport">Camera</div>
+            <div id="interactive" className="viewport"><Button color="danger" onClick={this.props.toggle}>X</Button>Camera</div>
         )
     }
 }

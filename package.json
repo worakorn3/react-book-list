@@ -24,6 +24,7 @@
     "react-bootstrap-table2-paginator": "^1.0.3",
     "react-bootstrap-table2-toolkit": "^1.1.1",
     "react-dom": "^16.5.2",
+    "react-icons": "^3.2.2",
     "react-loaders": "^3.0.1",
     "react-qr-reader": "^2.1.1",
     "react-qr-scanner": "0.0.7",

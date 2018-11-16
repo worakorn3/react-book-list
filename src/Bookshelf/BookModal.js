@@ -9,34 +9,12 @@ class BookModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            qrDelay: 300,
-            result: "Not Found",
             isOpen: false,
-
             bookName: '',
             bookVol: '',
             bookPub: '',
             bookISBN: ''
         };
-        this.handleScan.bind(this);
-    }
-
-    handleFieldChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    };
-
-    handleScan(data) {
-        if (data) {
-            this.setState({
-                result: data
-            });
-        }
-    }
-
-    handleError(err) {
-
     }
 
     handleSave = () => {
@@ -54,10 +32,16 @@ class BookModal extends React.Component {
         });
     };
 
-    handleDropdown(name, pubCode, pubName) {
+    handleDropdown = (name, pubCode, pubName) => {
         this.setState({
             bookPub: pubName
         })
+    }
+
+    handleScannedValue = (isbn) => {
+        this.setState({
+            bookISBN: isbn
+        }, this.props.toggleNested);
     }
 
     render() {
@@ -79,23 +63,34 @@ class BookModal extends React.Component {
                                             name="bookName" 
                                             id="bookName" 
                                             placeholder="Book Name..." 
-                                            onChange={e => this.handleChange(e)} />
+                                            onChange={this.handleChange} />
                                     </Col>
                                     <Col>
                                         <Label>Book Volume:</Label>
-                                        <Input type="text" name="bookVol" id="bookVol" placeholder="Book Volmue..." onChange={this.handleChange}></Input>
+                                        <Input 
+                                            value={this.state.bookVol} 
+                                            type="text" 
+                                            name="bookVol" 
+                                            id="bookVol" 
+                                            placeholder="Book Volmue..." 
+                                            onChange={this.handleChange} />
                                     </Col>
                                 </Row>
                                 <hr />
                                 <Label>Book Publisher:</Label>
-                                {/*<Input type="text" name="bookPub" id="bookPub" placeholder="Book Publisher..."></Input>*/}
                                 <PublisherList 
                                     dropdown={this.props.dropdown} 
-                                    onChange={this.handleDropdown.bind(this)}
+                                    onChange={this.handleDropdown}
                                 />
                                 <hr />
                                 <Label>Book ISBN:</Label><FontAwesomeIcon onClick={this.props.toggleNested} icon={faCamera} />
-                                <Input type="text" name="bookISBN" id="bookISBN" placeholder="Book ISBN..." onChange={this.handleChange}></Input>
+                                <Input 
+                                    value={this.state.bookISBN} 
+                                    type="text" 
+                                    name="bookISBN" 
+                                    id="bookISBN" 
+                                    placeholder="Book ISBN..." 
+                                    onChange={this.handleChange} />
                             </CardBody>
                             <CardFooter>
                                 <center>
@@ -117,7 +112,7 @@ class BookModal extends React.Component {
                             </CardFooter>
                         </Card>
                         <Modal isOpen={this.props.isOpenNested} toggle={this.props.toggleNested}>
-                            <BarcodeScanner />
+                            <BarcodeScanner onDetected={this.handleScannedValue} toggle={this.props.toggleNested}/>
                         </Modal>
                     </ModalBody>
                 </Modal>

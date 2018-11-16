@@ -8,6 +8,7 @@ import { Button, Card, CardBody, CardHeader, Modal, ModalBody } from 'reactstrap
 import firebase from '../firebase';
 import BookModal from './BookModal';
 import BookNavbar from './BookNavbar';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 
 class Bookshelf extends React.Component {
@@ -129,8 +130,8 @@ class Bookshelf extends React.Component {
 
     tableFormatter = (cell, row, rowIndex, formatExtraData) => {
         return (<div>
-                <Button color='info' style={{marginRight: '5%'}}>Edit</Button>
-                <Button color='danger'>Delete</Button>
+                <Button color='info' style={{marginRight: '5%'}}><FaEdit /></Button>
+                <Button color='danger'><FaTrash /></Button>
             </div>);
     }
 
