@@ -4,6 +4,7 @@ import {
     Row, Col, Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import BookshelfIcon from './bookshelf-svgrepo-com.svg';
 
 class Home extends React.Component {
 
@@ -20,7 +21,7 @@ class Home extends React.Component {
                                 <Link to={"/bookshelf"}>
                                     <Card>
                                         <Button color="success">
-                                            Bookshelf
+                                            <img src={BookshelfIcon} alt="bookshelfIcon"></img>
                                         </Button>
                                     </Card>
                                 </Link>
